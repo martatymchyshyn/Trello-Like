@@ -53,21 +53,24 @@ router.post('/', ((req, res) => {
 
     db.push(newList)
     res.status(201)
-    res.send("Successfully created list!")
+    res.send(newList)
 }))
 
 router.post('/:listId/cards', ((req, res) => {
     const listId = +req.params.listId;
     console.log(`Received request to add new card to list with id:${listId}`)
+    console.log(req.body)
     const retrievedList = retrieveListById(listId)
     const newCard = {id: calculateNewCardId(), text: req.body.text, listId: listId, index: req.body.index}
     addCardToList(retrievedList, newCard)
     res.status(200)
-    res.send("Successfully created card")
+    res.send(newCard)
 }))
 
 
 router.put('/:id/cards/:cardId', (req, res) => {
+    console.log(req.body)
+
     const oldListId = +req.params.id;
     const cardId = +req.params.cardId;
 
@@ -99,6 +102,7 @@ router.delete('/:id', ((req, res) => {
 router.delete('/:id/cards/:cardId', ((req, res) => {
     const listId = +req.params.id;
     const cardId = +req.params.cardId;
+    console.log(req.params)
     deleteCardFromList(retrieveListById(listId), retrieveCardFromListById(retrieveListById(listId), cardId))
     res.status(200)
     res.send()

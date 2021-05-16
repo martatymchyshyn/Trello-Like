@@ -1,4 +1,6 @@
 import CONSTANTS from "../actions/index";
+import axios from "axios"
+
 let listID = 2;
 let cardID = 8;
 const initialState = [
@@ -48,25 +50,45 @@ const initialState = [
     }
 ]
 
+
+
+
 const listsReducer = (state = initialState, action) => {
     switch (action.type) {
         case CONSTANTS.ADD_LIST:
+
+            const listBody = {
+                title: action.payload
+            }
+
+          axios.post('http://localhost:8090/lists/', listBody).then(response => console.log(response.data))
+
             const newList = {
+                id: listID,
                 title: action.payload,
                 cards: [],
-                id: listID,
+
 
             }
             listID += 1;
+            console.log(newList)
             return [...state, newList]
         case CONSTANTS.ADD_CARD:
+            const cardBody = {
+                text: action.payload,
+                listID: action.payload.listID,
+                index: action.payload.nextCardIndex
+            }
+
+
+            axios.post(`http://localhost:8090/lists/${cardBody.listID}/cards`, cardBody).then(response => console.log(response.data))
             const newCard = {
                 id: cardID,
                 text: action.payload.text,
 
             }
             cardID += 1;
-            const newState = state.map(list => {
+            return state.map(list => {
                 if (list.id === action.payload.listID) {
                     return {
                         ...list,
@@ -77,9 +99,12 @@ const listsReducer = (state = initialState, action) => {
                     return list;
                 }
             });
-            return newState;
 
         case CONSTANTS.DRAG_HAPPENED:
+            const dragBody = {
+                listId:action.payload.droppableIdEnd,
+                index:action.payload.droppableIndexEnd,
+            }
             const {
                 droppableIdStart,
                 droppableIdEnd,
@@ -87,6 +112,9 @@ const listsReducer = (state = initialState, action) => {
                 droppableIndexEnd,
                 draggableId
             } = action.payload
+
+            axios.put(`http://localhost:8090/lists/${droppableIdStart}/cards/${draggableId}`, dragBody).then(response => console.log(response.data))
+
             const newNewState = [...state];
             if (droppableIdStart === droppableIdEnd) {
                 console.log(droppableIdStart)
@@ -111,8 +139,9 @@ const listsReducer = (state = initialState, action) => {
         case CONSTANTS.DELETE_CARD:
 
             const deletedCard = {
-                cardID: action.payload
+                cardID: action.payload.cardID
             }
+            axios.delete(`http://localhost:8090/lists/${action.payload.listId}/cards/${action.payload.cardID}`).then(response => console.log(response.data))
             console.log(state)
             const deletedState = () => {
 
@@ -134,9 +163,12 @@ const listsReducer = (state = initialState, action) => {
                 return deletedState()
         case CONSTANTS.DELETE_LIST:
 
+
+
             const deletedList = {
                 listID: action.payload
             }
+            axios.delete(`http://localhost:8090/lists/${deletedList.listID}`).then(response => console.log(response.data))
             const deletedStateList = () => {
                  const result = []
                  state.map(item => {

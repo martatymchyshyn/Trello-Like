@@ -15,10 +15,12 @@ const CardContainer = styled.div`
     margin-bottom: 8px
 `
 
-const CardComponent = ({text, id, index, dispatch}) => {
+const CardComponent = ({text, id, index, dispatch, listId}) => {
    /* const card_id = store*/
     const handleDeleteCard = () => {
-        dispatch(deleteCard(id))
+        console.log(listId)
+        console.log(id)
+        dispatch(deleteCard(id, listId))
     }
 
     return(

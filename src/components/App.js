@@ -9,6 +9,22 @@ import {DragDropContext} from "react-beautiful-dnd";
 import {sort} from '../actions/'
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = [
+            {
+                title: '',
+                id: 0,
+                cards: [
+
+                ],
+            }
+    ]
+    }
+
+
+
+
 
   onDragEnd = (result) => {
       const {destination, source, draggableId} = result;
@@ -26,6 +42,7 @@ class App extends Component {
 
   }
   render() {
+
     const {lists} = this.props;
     return(
         <DragDropContext onDragEnd={this.onDragEnd}>
