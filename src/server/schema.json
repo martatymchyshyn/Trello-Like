@@ -1,0 +1,12 @@
+{
+    "id": 0,
+    "title": "someTitle",
+    "cards": []
+}
+
+{
+  "id": 0,
+  "task": "some task",
+  "listId": 0,
+  "index": 0
+}
