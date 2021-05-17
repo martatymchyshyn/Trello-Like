@@ -1,5 +1,5 @@
-export * from './listActions';
-export * from './cardsActions'
+export * from './addList';
+export * from './addCard'
 
 const CONSTANTS = {
     ADD_CARD: 'ADD_CARD',

@@ -6,7 +6,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Button from "@material-ui/core/Button";
 import  {connect} from "react-redux";
 import {addList} from '../actions';
-import addCard from '../actions/cardsActions'
+import addCard from '../actions/addCard'
 
 
 class TrelloActionButton extends Component {

@@ -1,1 +1,0 @@
-import CONSTANTS from '../actions/index'

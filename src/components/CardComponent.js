@@ -6,7 +6,6 @@ import Card from "@material-ui/core/Card";
 import {Draggable} from "react-beautiful-dnd";
 import styled from 'styled-components';
 import Icon from "@material-ui/core/Icon";
-/*import store from "../store/store";*/
 import deleteCard from "../actions/deleteCard";
 import  {connect} from "react-redux";
 
@@ -15,8 +14,8 @@ const CardContainer = styled.div`
     margin-bottom: 8px
 `
 
-const CardComponent = ({text, id, index, dispatch, listId}) => {
-   /* const card_id = store*/
+const CardComponent = ({text, id, index, dispatch, listId,}) => {
+
     const handleDeleteCard = () => {
         console.log(listId)
         console.log(id)
@@ -34,8 +33,8 @@ const CardComponent = ({text, id, index, dispatch, listId}) => {
                                     {text}
                                 </Typography>
                                 <Icon onClick={handleDeleteCard} color="disabled" style={{marginLeft: 8, cursor: 'pointer'}}>close</Icon>
-
                             </CardContent>
+
                         </Card>
 
                 </CardContainer>

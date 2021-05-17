@@ -8,22 +8,8 @@ import Header from './Header'
 import {DragDropContext} from "react-beautiful-dnd";
 import {sort} from '../actions/'
 
+
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = [
-            {
-                title: '',
-                id: 0,
-                cards: [
-
-                ],
-            }
-    ]
-    }
-
-
-
 
 
   onDragEnd = (result) => {
@@ -52,7 +38,6 @@ class App extends Component {
                 {lists.map(list => (<ListComponent  key={list.id} title={list.title} cards={list.cards} listID={list.id} />))}
                 <TrelloActionButton  list/>
                 </div>
-                {/*<Footer/>*/}
             </div>
         </DragDropContext>
 

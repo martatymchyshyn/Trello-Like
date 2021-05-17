@@ -12,7 +12,7 @@ const ListComponent = ({title, cards, listID, dispatch}) => {
     const handleDeleteList = () => {
         dispatch(deleteList(listID))
     }
-
+        console.log(cards)
     return(
         <Droppable droppableId={String(listID)}>
             {(provided) => (<div {...provided.droppableProps} ref={provided.innerRef} className='ListComponent'>
@@ -20,7 +20,7 @@ const ListComponent = ({title, cards, listID, dispatch}) => {
                     <h4>{title}</h4>
                     <Icon  onClick={handleDeleteList} color="#fff" style={{marginLeft: 8, cursor: 'pointer', paddingTop: 22, paddingRight: 15 }}>close</Icon>
                 </div>
-                {cards.map((card, index) => (<CardComponent  key={card.id} index={index} text={card.text} id={card.id} listId={listID}/>))}
+                {cards.map((card, index) => (<CardComponent  key={card.id} index={index} text={card.text} id={card.id} listId={listID} />))}
                 <TrelloActionButton listID={listID} nextCardIndex={cards.length}/>
                 {provided.placeholder}
             </div>)}

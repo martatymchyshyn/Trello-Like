@@ -1,24 +1,28 @@
 import CONSTANTS from "../actions/index";
 import axios from "axios"
-
+import moment from "moment";
+let timeToShow = moment().format('h:mm:ssa');
 let listID = 2;
 let cardID = 8;
-const initialState = [
+let initialState = [
     {
         title: 'To Do',
         id: 0,
         cards: [
             {
                 id: 0,
-                text: 'First card'
+                text: 'First card',
+
             },
             {
                 id: 1,
-                text: "Second card"
+                text: "Second card",
+
             },
             {
                 id: 2,
-                text: "Third card"
+                text: "Third card",
+
             }
         ],
     },
@@ -50,7 +54,7 @@ const initialState = [
     }
 ]
 
-
+/*axios.get('http://localhost:8090/lists/').then(res => initialState= res.data)*/
 
 
 const listsReducer = (state = initialState, action) => {
@@ -61,7 +65,11 @@ const listsReducer = (state = initialState, action) => {
                 title: action.payload
             }
 
-          axios.post('http://localhost:8090/lists/', listBody).then(response => console.log(response.data))
+          axios.post('http://localhost:8090/lists/', listBody).then(response => {
+              console.log(response.data)
+              return state= [...state, response.data]
+          })
+
 
             const newList = {
                 id: listID,
@@ -73,6 +81,7 @@ const listsReducer = (state = initialState, action) => {
             listID += 1;
             console.log(newList)
             return [...state, newList]
+
         case CONSTANTS.ADD_CARD:
             const cardBody = {
                 text: action.payload,
@@ -85,6 +94,7 @@ const listsReducer = (state = initialState, action) => {
             const newCard = {
                 id: cardID,
                 text: action.payload.text,
+                modifiedData: moment().format('h:mm:ssa')
 
             }
             cardID += 1;
@@ -154,6 +164,7 @@ const listsReducer = (state = initialState, action) => {
                             text: item.text,
                         }
                         resultObjects.push(itemObject)
+                        console.log(resultObjects)
                     })
                     return {...item, ...{cards: resultObjects}}
                 })

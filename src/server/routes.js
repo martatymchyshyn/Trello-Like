@@ -11,19 +11,22 @@ const db = [
                 id: 0,
                 text: 'First card',
                 listId: 0,
-                index: 0
+                index: 0,
+                timestamp: Date.now()
             },
             {
                 id: 1,
                 text: "Second card",
                 listId: 0,
-                index: 1
+                index: 1,
+                timestamp: Date.now()
             },
             {
                 id: 2,
                 text: "Third card",
                 listId: 0,
-                index: 2
+                index: 2,
+                timestamp: Date.now()
             }
         ],
     },
@@ -38,11 +41,13 @@ router.get('/', (req, res) => {
     console.log("Received request to fetch all lists")
     console.log(db)
     db.forEach(list => list.cards.sort((a, b) => a.index > b.index ? 1 : -1));
+    console.log(db)
     res.status(200)
     res.send(db)
 })
 
 router.post('/', ((req, res) => {
+    console.log(req.params)
     console.log(`Received request to create list with title: ${req.body.title}`)
 
     const newList = {
@@ -61,7 +66,7 @@ router.post('/:listId/cards', ((req, res) => {
     console.log(`Received request to add new card to list with id:${listId}`)
     console.log(req.body)
     const retrievedList = retrieveListById(listId)
-    const newCard = {id: calculateNewCardId(), text: req.body.text, listId: listId, index: req.body.index}
+    const newCard = {id: calculateNewCardId(), text: req.body.text, listId: listId, index: req.body.index, timestamp: Date.now()}
     addCardToList(retrievedList, newCard)
     res.status(200)
     res.send(newCard)
@@ -122,6 +127,7 @@ function swapCardBetweenLists(swappingData) {
 
     cardToSwap.index = swappingData.index
     cardToSwap.listId = swappingData.listToId
+    cardToSwap.timestamp = Date.now();
 
     const listTo = retrieveListById(swappingData.listToId)
     console.log(`listTo: ${listTo}`)
